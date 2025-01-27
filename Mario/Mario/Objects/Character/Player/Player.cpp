@@ -71,14 +71,15 @@ void Player::Update(float delta_seconds)
 		velocity.x = 0.0;
 	}
 	// ‰æ–ÊˆÚ“®—ÊŽæ“¾
-	if ((location.x + velocity.x) >= (D_WIN_MAX_X / 2))
+	if ((location.x + velocity.x) > (D_WIN_MAX_X / 2))
 	{
 		screen_velocity = -velocity.x * speed * delta_seconds;
-		velocity.x = 0.0;
+		velocity.x = 0.0f;
 	}
-
-	screen_velocity = 0.0f;
-
+	else
+	{
+		screen_velocity = 0.0f;
+	}
 
 
 
