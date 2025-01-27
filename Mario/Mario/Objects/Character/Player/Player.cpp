@@ -77,7 +77,7 @@ void Player::Update(float delta_seconds)
 		velocity.x = 0.0;
 	}
 
-
+	screen_velocity = 0.0f;
 
 
 
