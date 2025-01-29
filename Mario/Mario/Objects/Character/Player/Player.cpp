@@ -2,6 +2,8 @@
 #include"../../../Utility/InputManager.h"
 #include"State/PlayerStateFactory.h"
 
+#include"UserTemplate.h"
+
 Player::Player() : 
 	mario_images(),
 	next_state(ePlayerState::NONE),
@@ -61,52 +63,54 @@ void Player::Update(float delta_seconds)
 		next_state = ePlayerState::NONE;
 	}
 
-	//状態別の更新処理を行う
-	state->Update(delta_seconds);
+	////状態別の更新処理を行う
+	//state->Update(delta_seconds);
 
-	
-	// 左画面端チェック
-	if ((location.x + velocity.x) <= D_HARF)
-	{
-		velocity.x = 0.0;
-	}
-	// 画面移動量取得
-	if ((location.x + velocity.x) > (D_WIN_MAX_X / 2))
-	{
-		screen_velocity = -velocity.x * speed * delta_seconds;
-		velocity.x = 0.0f;
-	}
-	else
-	{
-		screen_velocity = 0.0f;
-	}
-
-
-
-	//重力速度の計算
-	if((location.y + velocity.y) < (D_MONO * 13 - D_HARF))
-	{
-		velocity.y += 0.5f;
-	}
+	//
+	//// 左画面端チェック
+	//if ((location.x + velocity.x) <= D_HARF)
+	//{
+	//	velocity.x = 0.0;
+	//}
+	//// 画面移動量取得
+	//if ((location.x + velocity.x) > (D_WIN_MAX_X / 2))
+	//{
+	//	screen_velocity = -velocity.x * speed * delta_seconds;
+	//	velocity.x = 0.0f;
+	//}
+	//else
+	//{
+	//	screen_velocity = 0.0f;
+	//}
 
 
 
-	//地面判定（仮）
-	if ((location.y + velocity.y) >= (D_MONO * 13 - D_HARF))
-	{
-		velocity.y = 0.0f;
-	}
-	else
-	{
-		is_jump = true;
-	}
+	////重力速度の計算
+	//if((location.y + velocity.y) < (D_MONO * 13 - D_HARF))
+	//{
+	//	velocity.y += 0.5f;
+	//}
+
+
+
+	////地面判定（仮）
+	//if ((location.y + velocity.y) >= (D_MONO * 13 - D_HARF))
+	//{
+	//	velocity.y = 0.0f;
+	//}
+	//else
+	//{
+	//	is_jump = true;
+	//}
 
 
 
 
-	//加速度を座標に加算
-	location += velocity * speed * delta_seconds;
-	velocity = 0.0f;
+	////加速度を座標に加算
+	//location += velocity * speed * delta_seconds;
+	//velocity = 0.0f;
+
+	Movement(delta_seconds);
 
 }
 
@@ -156,4 +160,66 @@ bool Player::GetIsJump()
 void Player::SetIsJump(bool is)
 {
 	is_jump = is;
+}
+
+void Player::Movement(float delta_seconds)
+{
+	// 入力機能インスタンス取得
+	InputManager* input = InputManager::GetInstance();
+
+	//入力状態によって向きを変更する
+	float direction = 0.0f;
+	if (input->GetKey(KEY_INPUT_LEFT) || input->GetKey(KEY_INPUT_A))		//左移動
+	{
+		direction = -1.0f;
+		flip_flag = TRUE;
+	}
+	else if (input->GetKey(KEY_INPUT_RIGHT) || input->GetKey(KEY_INPUT_D))	//右移動
+	{
+		direction = 1.0f;
+		flip_flag = FALSE;
+	}
+
+	//向きによって、移動量の加減を行う
+	if (direction != 0.0f)
+	{
+		//最高速度を超えないようにする
+		float max_speed = Abs<float>((5.0f * 0.5 * direction));
+		velocity.x += 0.5 * direction;
+		velocity.x = Min<float>(Max<float>(velocity.x, -max_speed), max_speed);
+	}
+	else
+	{
+		//減速する
+		if (velocity.x < -1e-6f)		//-1e-6f = (0に限りなく近い負の値)
+		{
+			//左移動の減速
+			float calc_speed = velocity.x + 0.05f;
+			velocity.x = Min<float>(calc_speed, 0.0f);
+		}
+		else if (velocity.x > 1e-6f)	//1e-6f = (0に限りなく近い正の値)
+		{
+			//右移動の減速
+			float cale_spped = velocity.x - 0.05f;
+			velocity.x = Max<float>(cale_spped, 0.0f);
+		}
+	}
+
+	//左画面端
+	if (location.x < (collision.box_size.x / 2.0f))
+	{
+		velocity.x = 0.0f;
+		location.x = collision.box_size.x / 2.0f;
+	}
+	//画面中央
+	if ((location.x + velocity.x) >= (D_WIN_MAX_X / 2))
+	{
+		//画面移動量取得
+		screen_velocity = -velocity.x;
+		velocity.x = 0.0;
+	}
+
+	//位置座標を加速度分減らす
+	location += velocity;
+
 }

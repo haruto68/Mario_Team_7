@@ -224,5 +224,8 @@
     <ClInclude Include="Objects\Terrain\BackGround\BackGround.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Character\Player\UserTemplate.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

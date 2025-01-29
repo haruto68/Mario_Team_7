@@ -166,6 +166,7 @@
     <ClCompile Include="Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Character\Player\UserTemplate.h" />
     <ClInclude Include="Objects\Terrain\BackGround\BackGround.h" />
     <ClInclude Include="Objects\Terrain\Terrain.h" />
     <ClInclude Include="Objects\Terrain\Block\Block.h" />

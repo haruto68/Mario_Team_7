@@ -124,7 +124,7 @@ eSceneType InGameScene::GetNowSceneType()const
 void InGameScene::LoadBackGroound()
 {
 	//ãÛê∂ê¨
-	LoadSky(1, 1, 213, 15);
+	//LoadSky(1, 1, 213, 15);
 	//éRê∂ê¨
 	LoadMountain(1, 11, 5, 13);
 	LoadMountain(17, 12, 19, 13);
@@ -149,7 +149,7 @@ void InGameScene::LoadBackGroound()
 	LoadBushes(158, 13, 160, 13);
 	LoadBushes(168, 13, 170, 13);
 	LoadBushes(206, 13, 208, 13);
-	//ãÛê∂ê¨
+	//â_ê∂ê¨
 	LoadCloud(9, 4, 11, 5);
 	LoadCloud(0, 3, 0, 4);
 	LoadCloud(20, 4, 22, 5);
