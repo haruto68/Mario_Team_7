@@ -16,6 +16,11 @@ Collision::~Collision()
 	hit_object_type.clear();
 }
 
+/// <summary>
+/// 適用オブジェクトか確認する処理
+/// </summary>
+/// <param name="hit_object">相手のオブジェクトタイプ</param>
+/// <returns>適用するオブジェクトなら、true</returns>
 bool Collision::IsCheckHitTarget(eObjectType hit_object) const
 {
 	for (eObjectType type : hit_object_type)

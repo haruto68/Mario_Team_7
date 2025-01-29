@@ -5,6 +5,7 @@
 
 #include"../Utility/Vector2D.h"
 
+//オブジェクトタイプ
 enum eObjectType
 {
 	eNone,
@@ -15,6 +16,7 @@ enum eObjectType
 	eItem
 };
 
+//当たり判定基底クラス
 class Collision
 {
 public:

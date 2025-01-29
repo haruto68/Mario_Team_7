@@ -37,7 +37,7 @@ void InGameScene::Initialize()
 	player = object_manager->CreateGameObject<Player>(Vector2D((D_MONO * 3), (D_MONO * 13 - D_HARF)));
 
 	// 背景生成
-	LoadBackGroound();
+	//LoadBackGroound();
 	// 地形生成
 	LoadGround();
 	// ブロック生成
