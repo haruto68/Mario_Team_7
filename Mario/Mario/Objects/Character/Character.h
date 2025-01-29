@@ -12,6 +12,8 @@ protected:
 
 	float g_velocity = 0.0;
 
+	bool flip_flag = false;
+
 public:
 	virtual void OnHitCollision(GameObject*) override
 	{

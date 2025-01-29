@@ -55,4 +55,6 @@ public:
 
 	bool GetIsJump();
 	void SetIsJump(bool);
+
+	void Movement(float);
 };
