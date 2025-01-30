@@ -52,8 +52,7 @@ void Player::Initialize()
 
 void Player::Update(float delta_seconds)
 {
-	// 移動スピード
-	float speed = 2000.0f;
+	
 	//Move(delta_seconds);
 
 	//stateの変更処理
@@ -114,9 +113,9 @@ void Player::Update(float delta_seconds)
 
 }
 
-void Player::Draw(const Vector2D& screen_offset) const
+void Player::Draw(const Vector2D& screen_offset, bool flip_flag) const
 {
-	__super::Draw(0.0f);
+	__super::Draw(0.0f, flip_flag);
 	state->Draw();
 	DrawFormatString(100, 50, 0x000000, "%.3f", velocity.y);
 
@@ -164,6 +163,9 @@ void Player::SetIsJump(bool is)
 
 void Player::Movement(float delta_seconds)
 {
+	// 移動スピード
+	float speed = 200.0f;
+
 	// 入力機能インスタンス取得
 	InputManager* input = InputManager::GetInstance();
 
@@ -220,6 +222,6 @@ void Player::Movement(float delta_seconds)
 	}
 
 	//位置座標を加速度分減らす
-	location += velocity;
+	location += velocity * speed * delta_seconds;
 
 }

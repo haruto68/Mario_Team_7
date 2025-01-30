@@ -39,7 +39,7 @@ public:
 public:
 	virtual void Initialize() override;
 	virtual void Update(float) override;
-	virtual void Draw(const Vector2D&) const override;
+	virtual void Draw(const Vector2D&, bool) const override;
 	virtual void Finalize() override;
 
 public:

@@ -37,11 +37,11 @@ void GameObject::Update(float delta_second)
 /// 描画処理
 /// </summary>
 /// <param name="screen_offset">オフセット値</param>
-void GameObject::Draw(const Vector2D& screen_offset) const
+void GameObject::Draw(const Vector2D& screen_offset, bool flip_flag) const
 {
 	// オフセット値を基に画像の描画を行う
 	Vector2D graph_location = this->location + screen_offset;
-	DrawRotaGraphF(graph_location.x, graph_location.y, SIZE, 0.0, image, TRUE);
+	DrawRotaGraphF(graph_location.x, graph_location.y, SIZE, 0.0, image, TRUE, flip_flag);
 }
 
 /// <summary>

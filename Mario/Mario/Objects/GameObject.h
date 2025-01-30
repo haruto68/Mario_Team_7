@@ -18,7 +18,7 @@ public:
 public:
 	virtual void Initialize();
 	virtual void Update(float);
-	virtual void Draw(const Vector2D&) const;
+	virtual void Draw(const Vector2D&, bool) const;
 	virtual void Finalize();
 
 	virtual void OnHitCollision(GameObject*);

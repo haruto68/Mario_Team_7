@@ -12,6 +12,7 @@ protected:
 
 	float g_velocity = 0.0;
 
+public:
 	bool flip_flag = false;
 
 public:

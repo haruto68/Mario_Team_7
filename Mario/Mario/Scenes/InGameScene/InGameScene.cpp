@@ -101,9 +101,14 @@ eSceneType InGameScene::Update(const float& delta_seconds)
 
 void InGameScene::Draw() const
 {
+	//‹ó
+	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(92, 148, 252), TRUE);
+
+	bool p_f = player->flip_flag;
+
 	for (GameObject* obj : scene_objects_list)
 	{
-		obj->Draw(screen_offset);
+		obj->Draw(screen_offset, p_f);
 	}
 }
 

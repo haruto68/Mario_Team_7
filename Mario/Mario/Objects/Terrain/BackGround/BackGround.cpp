@@ -54,7 +54,7 @@ void BackGround::Update(float delta_seconds)
 
 }
 
-void BackGround::Draw(const Vector2D& screen_offset) const
+void BackGround::Draw(const Vector2D& screen_offset, bool flip_flag) const
 {
 	// オフセット値を基に画像の描画を行う
 	Vector2D graph_location = this->location + screen_offset;
