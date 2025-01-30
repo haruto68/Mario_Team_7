@@ -52,9 +52,6 @@ void Player::Initialize()
 
 void Player::Update(float delta_seconds)
 {
-	
-	//Move(delta_seconds);
-
 	//stateの変更処理
 	if (next_state != ePlayerState::NONE)
 	{
@@ -62,35 +59,14 @@ void Player::Update(float delta_seconds)
 		next_state = ePlayerState::NONE;
 	}
 
-	////状態別の更新処理を行う
+	////状態別の更新処理を行う	(封印)
 	//state->Update(delta_seconds);
-
-	//
-	//// 左画面端チェック
-	//if ((location.x + velocity.x) <= D_HARF)
-	//{
-	//	velocity.x = 0.0;
-	//}
-	//// 画面移動量取得
-	//if ((location.x + velocity.x) > (D_WIN_MAX_X / 2))
-	//{
-	//	screen_velocity = -velocity.x * speed * delta_seconds;
-	//	velocity.x = 0.0f;
-	//}
-	//else
-	//{
-	//	screen_velocity = 0.0f;
-	//}
-
-
 
 	////重力速度の計算
 	//if((location.y + velocity.y) < (D_MONO * 13 - D_HARF))
 	//{
 	//	velocity.y += 0.5f;
 	//}
-
-
 
 	////地面判定（仮）
 	//if ((location.y + velocity.y) >= (D_MONO * 13 - D_HARF))
@@ -101,13 +77,6 @@ void Player::Update(float delta_seconds)
 	//{
 	//	is_jump = true;
 	//}
-
-
-
-
-	////加速度を座標に加算
-	//location += velocity * speed * delta_seconds;
-	//velocity = 0.0f;
 
 	Movement(delta_seconds);
 
@@ -165,12 +134,14 @@ void Player::Movement(float delta_seconds)
 {
 	// 移動スピード
 	float speed = 200.0f;
+	// 移動方向
+	float direction = 0.0f;
 
 	// 入力機能インスタンス取得
 	InputManager* input = InputManager::GetInstance();
 
+
 	//入力状態によって向きを変更する
-	float direction = 0.0f;
 	if (input->GetKey(KEY_INPUT_LEFT) || input->GetKey(KEY_INPUT_A))		//左移動
 	{
 		direction = -1.0f;
@@ -180,6 +151,14 @@ void Player::Movement(float delta_seconds)
 	{
 		direction = 1.0f;
 		flip_flag = FALSE;
+	}
+
+	//ジャンプ
+	if (input->GetKeyDown(KEY_INPUT_J) && is_jump == false)
+	{
+		is_jump = true;
+
+		velocity.y = -20.0f;
 	}
 
 	//向きによって、移動量の加減を行う
@@ -196,13 +175,13 @@ void Player::Movement(float delta_seconds)
 		if (velocity.x < -1e-6f)		//-1e-6f = (0に限りなく近い負の値)
 		{
 			//左移動の減速
-			float calc_speed = velocity.x + 0.05f;
+			float calc_speed = velocity.x + 0.015f;
 			velocity.x = Min<float>(calc_speed, 0.0f);
 		}
 		else if (velocity.x > 1e-6f)	//1e-6f = (0に限りなく近い正の値)
 		{
 			//右移動の減速
-			float cale_spped = velocity.x - 0.05f;
+			float cale_spped = velocity.x - 0.015f;
 			velocity.x = Max<float>(cale_spped, 0.0f);
 		}
 	}
@@ -219,6 +198,16 @@ void Player::Movement(float delta_seconds)
 		//画面移動量取得
 		screen_velocity = -velocity.x;
 		velocity.x = 0.0;
+	}
+
+	//重力
+	velocity.y += 0.98f * 0.3f;
+
+	//地面判定（仮）
+	if ((location.y + velocity.y) >= (D_MONO * 13 - D_HARF))
+	{
+		is_jump = false;
+		velocity.y = 0.0f;
 	}
 
 	//位置座標を加速度分減らす
