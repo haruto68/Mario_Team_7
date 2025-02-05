@@ -42,10 +42,22 @@ void InGameScene::Initialize()
 	LoadGround();
 	// ブロック生成
 	LoadBlock();
+
+	
+	// 敵生成
+	LoadEnemy();
 }
 
 eSceneType InGameScene::Update(const float& delta_seconds)
 {
+	//test
+	if (screen_offset.x >= 5.0 * D_MONO)
+	{
+		object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 21), (D_MONO * 13 - D_HARF)));
+	}
+	//test
+
+
 	// 入力機能インスタンス取得
 	InputManager* input = InputManager::GetInstance();
 
@@ -104,11 +116,9 @@ void InGameScene::Draw() const
 	//空
 	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(92, 148, 252), TRUE);
 
-	bool p_f = player->flip_flag;
-
 	for (GameObject* obj : scene_objects_list)
 	{
-		obj->Draw(screen_offset, p_f);
+		obj->Draw(screen_offset, false);
 	}
 }
 
@@ -546,4 +556,26 @@ void InGameScene::LoadHidden(int x_start, int y_start, int x_last, int y_last, e
 			b->SetContentsState(state);
 		}
 	}
+}
+
+
+// 敵生成
+void InGameScene::LoadEnemy()
+{
+	// クリボー仮
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 21), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 44), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 53), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 54), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 79), (D_MONO * 9 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 81), (D_MONO * 5 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 97), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 98), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 112), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 113), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 124), (D_MONO * 13 - D_HARF)));
+	object_manager->CreateGameObject<Kuribo>(Vector2D((D_MONO * 125), (D_MONO * 13 - D_HARF)));
+
+	// ノコノコ仮
+	object_manager->CreateGameObject<Nokonoko>(Vector2D((D_MONO * 103), (D_MONO * 13 - D_HARF)));
 }

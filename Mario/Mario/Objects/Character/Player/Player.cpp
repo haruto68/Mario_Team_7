@@ -15,16 +15,7 @@ Player::Player() :
 	is_jump(false),
 	screen_velocity(0.0f)
 {
-	
-}
 
-Player::~Player()
-{
-
-}
-
-void Player::Initialize()
-{
 	//リソース管理インスタンス取得
 	ResourceManager* rm = ResourceManager::GetInstance();
 
@@ -46,8 +37,17 @@ void Player::Initialize()
 	// 可動性設定
 	is_mobility = true;
 
-
 	state = PlayerStateFactory::Get((*this), ePlayerState::IDLE);
+}
+
+Player::~Player()
+{
+
+}
+
+void Player::Initialize()
+{
+
 }
 
 void Player::Update(float delta_seconds)
@@ -84,7 +84,9 @@ void Player::Update(float delta_seconds)
 
 void Player::Draw(const Vector2D& screen_offset, bool flip_flag) const
 {
-	__super::Draw(0.0f, flip_flag);
+	
+
+	__super::Draw(0.0f, this->flip_flag);
 	state->Draw();
 	DrawFormatString(100, 50, 0x000000, "%.3f", velocity.y);
 

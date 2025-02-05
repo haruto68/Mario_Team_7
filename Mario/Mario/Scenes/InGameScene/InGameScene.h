@@ -4,6 +4,8 @@
 
 
 #include"../../Objects/Character/Player/Player.h"
+#include"../../Objects/Character/Enemy/Kuribo/Kuribo.h"
+#include"../../Objects/Character/Enemy/Nokonoko/Nokonoko.h"
 #include"../../Objects/Terrain/Block/Block.h"
 #include"../../Objects/Terrain/Ground/Ground.h"
 #include"../../Objects/Terrain/BackGround/BackGround.h"
@@ -47,4 +49,8 @@ public:
 	void LoadQuestion(int, int, int, int, eContentsState);
 	void LoadBrick(int, int, int, int, eContentsState);
 	void LoadHidden(int, int, int, int, eContentsState);
+
+
+	// ìGê∂ê¨
+	void LoadEnemy();
 };
