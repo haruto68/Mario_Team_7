@@ -4,11 +4,28 @@
 #include"../../Objects/GameObjectManager.h"
 
 InGameScene::InGameScene() :
+	ui_coin_images(),
+	symbol_images(),
+	string_images(),
+	st_mario_image(0),
+	st_world_image(0),
+	st_time_image(0),
+	st_top_image(0),
 	object_manager(),
 	player(),
 	scene_objects_list()
 {
+	//リソース管理インスタンス取得
+	ResourceManager* rm = ResourceManager::GetInstance();
 
+	//画像取得
+	ui_coin_images = rm->GetImages("Resource/Images/UI/uicoin.png", 4, 4, 1, 16, 16);
+	symbol_images = rm->GetImages("Resource/Images/UI/num.png", 15, 15, 1, 16, 16);
+	string_images = rm->GetImages("Resource/Images/UI/string.png", 26, 26, 1, 16, 16);
+	st_mario_image = rm->GetImages("Resource/Images/UI/name_mario.png")[0];
+	st_world_image = rm->GetImages("Resource/Images/UI/world.png")[0];
+	st_time_image = rm->GetImages("Resource/Images/UI/time.png")[0];
+	st_top_image = rm->GetImages("Resource/Images/UI/top.png")[0];
 }
 
 InGameScene::~InGameScene()
@@ -113,18 +130,23 @@ eSceneType InGameScene::Update(const float& delta_seconds)
 
 void InGameScene::Draw() const
 {
-	//空
+	// 空描画
 	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(92, 148, 252), TRUE);
 
+	// オブジェクト描画
 	for (GameObject* obj : scene_objects_list)
 	{
 		obj->Draw(screen_offset, false);
 	}
+
+	DrawUI();
 }
 
 void InGameScene::Finalize()
 {
-
+	ui_coin_images.clear();
+	symbol_images.clear();
+	string_images.clear();
 }
 
 eSceneType InGameScene::GetNowSceneType()const
@@ -134,6 +156,36 @@ eSceneType InGameScene::GetNowSceneType()const
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// UI描画
+void InGameScene::DrawUI() const
+{
+	int coin = player->GetCoin();
+	int live = player->GetLive();
+
+	// UI
+	// 残機
+	DrawRotaGraph(132, 60, SIZE, 0.0, st_mario_image, TRUE);
+	// スコア
+	DrawRotaGraph((D_HARF * 4 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
+	DrawRotaGraph((D_HARF * 5 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
+	DrawRotaGraph((D_HARF * 6 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
+	DrawRotaGraph((D_HARF * 7 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
+	DrawRotaGraph((D_HARF * 8 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
+	DrawRotaGraph((D_HARF * 9 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
+	// コイン
+	DrawRotaGraph((D_HARF * 12 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, ui_coin_images[0], TRUE);
+	DrawRotaGraph((D_HARF * 13 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[11], TRUE);
+	DrawRotaGraph((D_HARF * 14 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[coin / 10], TRUE);
+	DrawRotaGraph((D_HARF * 15 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[coin % 10], TRUE);
+	// ワールド
+	DrawRotaGraph(492, 60, SIZE, 0.0, st_world_image, TRUE);
+	DrawRotaGraph((D_HARF * 20 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[1], TRUE);
+	DrawRotaGraph((D_HARF * 21 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[10], TRUE);
+	DrawRotaGraph((D_HARF * 22 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[1], TRUE);
+	// 制限時間
+	DrawRotaGraph(648, 60, SIZE, 0.0, st_time_image, TRUE);
+}
 
 // 背景生成
 void InGameScene::LoadBackGroound()

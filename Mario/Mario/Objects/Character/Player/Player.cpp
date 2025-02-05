@@ -11,7 +11,7 @@ Player::Player() :
 	is_star(false),
 	invincible_count(0),
 	get_coin(0),
-	lives(0),
+	lives(3),
 	is_jump(false),
 	screen_velocity(0.0f)
 {
@@ -72,8 +72,8 @@ void Player::Draw(const Vector2D& screen_offset, bool flip_flag) const
 
 	// BoxSize•`‰æ
 	//DrawBox(location.x - (int)(D_HARF), location.y - (int)(D_HARF), location.x + (int)(D_HARF), location.y + (int)(D_HARF), GetColor(255, 0, 0), FALSE);
-
-	DrawFormatString(100, 50, 0x000000, "vel.y  %.2f", velocity.y);
+	// velocity.yŠm”F
+	//DrawFormatString(100, 50, 0x000000, "vel.y  %.2f", velocity.y);
 }
 
 void Player::Finalize()
@@ -102,6 +102,16 @@ void Player::SetVelocity(Vector2D velocity)
 void Player::SetNextState(ePlayerState state)
 {
 	next_state = state;
+}
+
+int Player::GetCoin()
+{
+	return get_coin;
+}
+
+int Player::GetLive()
+{
+	return lives;
 }
 
 bool Player::GetIsJump()

@@ -8,7 +8,6 @@ protected:
 	std::vector<int> ui_coin_images;
 	std::vector<int> symbol_images;
 	std::vector<int> string_images;
-
 	int back_ground_image;
 	int st_mario_image;
 	int st_world_image;

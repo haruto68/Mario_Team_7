@@ -53,10 +53,12 @@ public:
 	void SetVelocity(Vector2D);
 	void SetNextState(ePlayerState);
 
+	int GetCoin();
+	int GetLive();
+
 	bool GetIsJump();
 	void SetIsJump(bool);
 
 	void Movement(float);
-
 	void Animation();
 };

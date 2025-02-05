@@ -12,6 +12,16 @@
 
 class InGameScene : public SceneBase
 {
+protected:
+	// UI‰æ‘œ
+	std::vector<int> ui_coin_images;
+	std::vector<int> symbol_images;
+	std::vector<int> string_images;
+	int st_mario_image;
+	int st_world_image;
+	int st_time_image;
+	int st_top_image;
+
 public:
 	class GameObjectManager* object_manager;
 	class Player* player;
@@ -32,6 +42,9 @@ public:
 	virtual eSceneType GetNowSceneType() const override;
 
 public:
+	// UI•`‰æ
+	void DrawUI() const;
+
 	// ”wŒi¶¬
 	void LoadBackGroound();
 	void LoadBushes(int, int, int, int);
@@ -53,4 +66,5 @@ public:
 
 	// “G¶¬
 	void LoadEnemy();
+
 };

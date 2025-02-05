@@ -13,16 +13,6 @@ TitleScene::TitleScene() :
 	st_time_image(0),
 	st_top_image(0)
 {
-
-}
-
-TitleScene::~TitleScene()
-{
-
-}
-
-void TitleScene::Initialize()
-{
 	//リソース管理インスタンス取得
 	ResourceManager* rm = ResourceManager::GetInstance();
 
@@ -37,6 +27,16 @@ void TitleScene::Initialize()
 	st_world_image = rm->GetImages("Resource/Images/UI/world.png")[0];
 	st_time_image = rm->GetImages("Resource/Images/UI/time.png")[0];
 	st_top_image = rm->GetImages("Resource/Images/UI/top.png")[0];
+}
+
+TitleScene::~TitleScene()
+{
+
+}
+
+void TitleScene::Initialize()
+{
+
 }
 
 eSceneType TitleScene::Update(const float& delta_second)
@@ -64,14 +64,13 @@ eSceneType TitleScene::Update(const float& delta_second)
 
 void TitleScene::Draw() const
 {
+	// UI
 	// 背景
 	DrawRotaGraph(D_WIN_MAX_X / 2, D_WIN_MAX_Y / 2, SIZE, 0.0, back_ground_image, TRUE);
 	// マリオ
 	DrawRotaGraph((D_MONO * 3), (D_MONO * 13 - D_HARF), SIZE, 0.0, mario_images[0], TRUE);
-	// UI
+	// 残機
 	DrawRotaGraph(132, 60, SIZE, 0.0, st_mario_image, TRUE);
-	DrawRotaGraph(492, 60, SIZE, 0.0, st_world_image, TRUE);
-	DrawRotaGraph(648, 60, SIZE, 0.0, st_time_image, TRUE);
 	// スコア
 	DrawRotaGraph((D_HARF * 4 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
 	DrawRotaGraph((D_HARF * 5 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
@@ -85,9 +84,12 @@ void TitleScene::Draw() const
 	DrawRotaGraph((D_HARF * 14 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
 	DrawRotaGraph((D_HARF * 15 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[0], TRUE);
 	// ワールド
+	DrawRotaGraph(492, 60, SIZE, 0.0, st_world_image, TRUE);
 	DrawRotaGraph((D_HARF * 20 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[1], TRUE);
 	DrawRotaGraph((D_HARF * 21 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[10], TRUE);
 	DrawRotaGraph((D_HARF * 22 - D_QUARTER), (D_HARF * 4 - D_QUARTER), SIZE, 0.0, symbol_images[1], TRUE);
+	// 制限時間
+	DrawRotaGraph(648, 60, SIZE, 0.0, st_time_image, TRUE);
 	// STARTボタン
 	int st_PLAY[4] = { 15,11,0,24 };
 	for (int i = 0; i < 4; i++)
