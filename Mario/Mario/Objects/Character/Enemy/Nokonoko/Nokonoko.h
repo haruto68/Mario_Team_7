@@ -22,4 +22,5 @@ public:
 
 public:
 	void Movement(float);
+	void Animation();
 };

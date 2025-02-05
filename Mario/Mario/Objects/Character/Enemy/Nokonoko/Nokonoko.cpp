@@ -39,6 +39,7 @@ void Nokonoko::Initialize()
 void Nokonoko::Update(float delta_seconds)
 {
 	Movement(delta_seconds);
+	Animation();
 }
 
 void Nokonoko::Draw(const Vector2D& screen_offset, bool flip_flag) const
@@ -69,4 +70,21 @@ void Nokonoko::Movement(float delta_seconds)
 	float speed = 100.0f;
 
 	location.x -= 1.0f * speed * delta_seconds;
+}
+
+void Nokonoko::Animation()
+{
+	anime_count++;
+	if (anime_count > 120)
+	{
+		if (image == nokonoko_images[2])
+		{
+			image = nokonoko_images[3];
+		}
+		else
+		{
+			image = nokonoko_images[2];
+		}
+		anime_count = 0;
+	}
 }

@@ -36,6 +36,7 @@ void Kuribo::Initialize()
 void Kuribo::Update(float delta_seconds)
 {
 	Movement(delta_seconds);
+	Animation();
 }
 
 void Kuribo::Draw(const Vector2D& screen_offset, bool flip_flag) const
@@ -56,4 +57,21 @@ void Kuribo::Movement(float delta_seconds)
 	float speed = 100.0f;
 
 	location.x -= 1.0f* speed * delta_seconds;
+}
+
+void Kuribo::Animation()
+{
+	anime_count++;
+	if (anime_count > 120)
+	{
+		if (image == kuribo_images[0])
+		{
+			image = kuribo_images[1];
+		}
+		else
+		{
+			image = kuribo_images[0];
+		}
+		anime_count = 0;
+	}
 }

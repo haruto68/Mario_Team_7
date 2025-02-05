@@ -57,4 +57,6 @@ public:
 	void SetIsJump(bool);
 
 	void Movement(float);
+
+	void Animation();
 };
