@@ -47,14 +47,20 @@ public:
 	virtual void Draw(const Vector2D&, bool) const override;
 	virtual void Finalize() override;
 
+	virtual void OnHitCollision(GameObject*) override;
+
 public:
 	Vector2D GetScreenVelocity();
 	Vector2D GetVelocity();
 	void SetVelocity(Vector2D);
 	void SetNextState(ePlayerState);
 
+	int GetCoin();
+	int GetLive();
+
 	bool GetIsJump();
 	void SetIsJump(bool);
 
 	void Movement(float);
+	void Animation();
 };

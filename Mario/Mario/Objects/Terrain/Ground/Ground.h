@@ -29,6 +29,8 @@ public:
 	virtual void Draw(const Vector2D&, bool) const override;
 	virtual void Finalize() override;
 
+	virtual void OnHitCollision(GameObject*) override;
+
 public:
 	void SetGroundState(eGroundState);
 	void SetPipeNum(int);

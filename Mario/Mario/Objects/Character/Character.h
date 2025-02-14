@@ -12,12 +12,9 @@ protected:
 
 	float g_velocity = 0.0;
 
+	int anime_count = 0;	// アニメーション用カウント
+
 public:
 	bool flip_flag = false;
 
-public:
-	virtual void OnHitCollision(GameObject*) override
-	{
-
-	}
 };

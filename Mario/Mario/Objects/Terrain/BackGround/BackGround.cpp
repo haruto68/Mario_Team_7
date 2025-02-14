@@ -9,16 +9,6 @@ BackGround::BackGround() :
 	castle_image(0),
 	image_num(0)
 {
-
-}
-
-BackGround::~BackGround()
-{
-
-}
-
-void BackGround::Initialize()
-{
 	//リソース管理インスタンス取得
 	ResourceManager* rm = ResourceManager::GetInstance();
 
@@ -41,12 +31,22 @@ void BackGround::Initialize()
 	cloud_images[3] = rm->GetImages("Resource/Images/cloud1.png")[0];
 	cloud_images[4] = rm->GetImages("Resource/Images/cloud2.png")[0];
 	cloud_images[5] = rm->GetImages("Resource/Images/cloud3.png")[0];
-	sky_image= rm->GetImages("Resource/Images/sora.png")[0];
+	sky_image = rm->GetImages("Resource/Images/sora.png")[0];
 	castle_image = rm->GetImages("Resource/Images/siro1.png")[0];
 	// レイヤー設定
 	z_layer = 1;
 	// 可動性設定
 	is_mobility = false;
+}
+
+BackGround::~BackGround()
+{
+
+}
+
+void BackGround::Initialize()
+{
+
 }
 
 void BackGround::Update(float delta_seconds)

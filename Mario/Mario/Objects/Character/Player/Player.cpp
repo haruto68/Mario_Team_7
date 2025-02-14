@@ -11,20 +11,11 @@ Player::Player() :
 	is_star(false),
 	invincible_count(0),
 	get_coin(0),
-	lives(0),
+	lives(3),
 	is_jump(false),
 	screen_velocity(0.0f)
 {
-	
-}
 
-Player::~Player()
-{
-
-}
-
-void Player::Initialize()
-{
 	//リソース管理インスタンス取得
 	ResourceManager* rm = ResourceManager::GetInstance();
 
@@ -46,55 +37,51 @@ void Player::Initialize()
 	// 可動性設定
 	is_mobility = true;
 
-
 	state = PlayerStateFactory::Get((*this), ePlayerState::IDLE);
+}
+
+Player::~Player()
+{
+
+}
+
+void Player::Initialize()
+{
+
 }
 
 void Player::Update(float delta_seconds)
 {
-	//stateの変更処理
-	if (next_state != ePlayerState::NONE)
-	{
-		state = PlayerStateFactory::Get((*this), next_state);
-		next_state = ePlayerState::NONE;
-	}
-
-	////状態別の更新処理を行う	(封印)
+	////stateの変更処理
+	//if (next_state != ePlayerState::NONE)
+	//{
+	//	state = PlayerStateFactory::Get((*this), next_state);
+	//	next_state = ePlayerState::NONE;
+	//}
+	////状態別の更新処理を行う
 	//state->Update(delta_seconds);
-
-	////重力速度の計算
-	//if((location.y + velocity.y) < (D_MONO * 13 - D_HARF))
-	//{
-	//	velocity.y += 0.5f;
-	//}
-
-	////地面判定（仮）
-	//if ((location.y + velocity.y) >= (D_MONO * 13 - D_HARF))
-	//{
-	//	velocity.y = 0.0f;
-	//}
-	//else
-	//{
-	//	is_jump = true;
-	//}
 
 	Movement(delta_seconds);
 
+	Animation();
 }
 
 void Player::Draw(const Vector2D& screen_offset, bool flip_flag) const
 {
-	__super::Draw(0.0f, flip_flag);
-	state->Draw();
-	DrawFormatString(100, 50, 0x000000, "%.3f", velocity.y);
+	__super::Draw(0.0f, this->flip_flag);
 
-	DrawFormatString(250, 50, 0x000000, "X_%.3f", location.x);
-	DrawFormatString(250, 70, 0x000000, "Y_%.3f", location.y);
+	// BoxSize描画
+	//DrawBox(location.x - (int)(D_HARF), location.y - (int)(D_HARF), location.x + (int)(D_HARF), location.y + (int)(D_HARF), GetColor(255, 0, 0), FALSE);
 }
 
 void Player::Finalize()
 {
 	mario_images.clear();
+}
+
+void Player::OnHitCollision(GameObject* hit_object)
+{
+
 }
 
 Vector2D Player::GetScreenVelocity()
@@ -118,6 +105,16 @@ void Player::SetVelocity(Vector2D velocity)
 void Player::SetNextState(ePlayerState state)
 {
 	next_state = state;
+}
+
+int Player::GetCoin()
+{
+	return get_coin;
+}
+
+int Player::GetLive()
+{
+	return lives;
 }
 
 bool Player::GetIsJump()
@@ -158,7 +155,7 @@ void Player::Movement(float delta_seconds)
 	{
 		is_jump = true;
 
-		velocity.y = -20.0f;
+		velocity.y = -30.0f;
 	}
 
 	//向きによって、移動量の加減を行う
@@ -186,6 +183,16 @@ void Player::Movement(float delta_seconds)
 		}
 	}
 
+	// 移動しているか
+	if (velocity.x != 0.0f)
+	{
+		next_state = ePlayerState::RUN;
+	}
+	else
+	{
+		next_state = ePlayerState::IDLE;
+	}
+
 	//左画面端
 	if (location.x < (collision.box_size.x / 2.0f))
 	{
@@ -196,12 +203,12 @@ void Player::Movement(float delta_seconds)
 	if ((location.x + velocity.x) >= (D_WIN_MAX_X / 2))
 	{
 		//画面移動量取得
-		screen_velocity = -velocity.x;
+		screen_velocity = -velocity.x * 0.5;
 		velocity.x = 0.0;
 	}
 
 	//重力
-	velocity.y += 0.98f * 0.3f;
+	velocity.y += 0.98f * 0.1f;
 
 	//地面判定（仮）
 	if ((location.y + velocity.y) >= (D_MONO * 13 - D_HARF))
@@ -210,7 +217,45 @@ void Player::Movement(float delta_seconds)
 		velocity.y = 0.0f;
 	}
 
+	if (is_jump)
+	{
+		next_state = ePlayerState::JUMP;
+	}
+
 	//位置座標を加速度分減らす
 	location += velocity * speed * delta_seconds;
+
+}
+
+void Player::Animation()
+{
+	switch (next_state)
+	{
+	case IDLE:	// 待機アニメーション
+		image = mario_images[0];
+		break;
+	case RUN:	// 移動アニメーション
+		anime_count++;
+		if (anime_count > 180)
+		{
+			if (image == mario_images[1])
+			{
+				image = mario_images[2];
+			}
+			else if (image == mario_images[2])
+			{
+				image = mario_images[3];
+			}
+			else
+			{
+				image = mario_images[1];
+			}
+			anime_count = 0;
+		}
+		break;
+	case JUMP:	// ジャンプアニメーション
+		image = mario_images[5];
+		break;
+	}
 
 }
