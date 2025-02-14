@@ -72,8 +72,6 @@ void Player::Draw(const Vector2D& screen_offset, bool flip_flag) const
 
 	// BoxSize描画
 	//DrawBox(location.x - (int)(D_HARF), location.y - (int)(D_HARF), location.x + (int)(D_HARF), location.y + (int)(D_HARF), GetColor(255, 0, 0), FALSE);
-	// velocity.y確認
-	//DrawFormatString(100, 50, 0x000000, "vel.y  %.2f", velocity.y);
 }
 
 void Player::Finalize()
@@ -157,7 +155,7 @@ void Player::Movement(float delta_seconds)
 	{
 		is_jump = true;
 
-		velocity.y = -20.0f;
+		velocity.y = -30.0f;
 	}
 
 	//向きによって、移動量の加減を行う
@@ -205,12 +203,12 @@ void Player::Movement(float delta_seconds)
 	if ((location.x + velocity.x) >= (D_WIN_MAX_X / 2))
 	{
 		//画面移動量取得
-		screen_velocity = -velocity.x;
+		screen_velocity = -velocity.x * 0.5;
 		velocity.x = 0.0;
 	}
 
 	//重力
-	velocity.y += 0.98f * 0.25f;
+	velocity.y += 0.98f * 0.1f;
 
 	//地面判定（仮）
 	if ((location.y + velocity.y) >= (D_MONO * 13 - D_HARF))
@@ -238,7 +236,7 @@ void Player::Animation()
 		break;
 	case RUN:	// 移動アニメーション
 		anime_count++;
-		if (anime_count > 60)
+		if (anime_count > 180)
 		{
 			if (image == mario_images[1])
 			{

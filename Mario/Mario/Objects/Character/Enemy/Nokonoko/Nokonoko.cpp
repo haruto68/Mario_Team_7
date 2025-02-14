@@ -80,7 +80,7 @@ void Nokonoko::Movement(float delta_seconds)
 void Nokonoko::Animation()
 {
 	anime_count++;
-	if (anime_count > 120)
+	if (anime_count > 360)
 	{
 		if (image == nokonoko_images[2])
 		{

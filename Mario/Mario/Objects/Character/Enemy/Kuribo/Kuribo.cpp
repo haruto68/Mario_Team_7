@@ -54,7 +54,7 @@ void Kuribo::Finalize()
 
 void Kuribo::OnHitCollision(GameObject* hit_object)
 {
-	if(hit_object->collision.)
+	
 }
 
 void Kuribo::Movement(float delta_seconds)
@@ -67,7 +67,7 @@ void Kuribo::Movement(float delta_seconds)
 void Kuribo::Animation()
 {
 	anime_count++;
-	if (anime_count > 120)
+	if (anime_count > 360)
 	{
 		if (image == kuribo_images[0])
 		{
