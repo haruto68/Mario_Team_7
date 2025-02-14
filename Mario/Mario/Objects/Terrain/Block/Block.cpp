@@ -67,7 +67,7 @@ void Block::Draw(const Vector2D& screen_offset, bool flip_flag) const
 	}
 
 	//debug
-	SetFontSize(24);
+	/*SetFontSize(24);
 	switch (content_state)
 	{
 	case DEFAULT:
@@ -90,7 +90,7 @@ void Block::Draw(const Vector2D& screen_offset, bool flip_flag) const
 		break;
 	default:
 		break;
-	}
+	}*/
 }
 
 void Block::Finalize()
