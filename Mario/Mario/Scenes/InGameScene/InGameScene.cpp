@@ -3,10 +3,17 @@
 
 #include"../../Objects/GameObjectManager.h"
 
+/*書き込んだところ*/
+#include "DxLib.h"
+#include <fstream>
+/*ここまで*/
+
 InGameScene::InGameScene() :
 	object_manager(),
 	player(),
-	scene_objects_list()
+	scene_objects_list(),
+	g(nullptr),											// ここ追加分
+	b(nullptr)
 {
 
 }
@@ -42,6 +49,12 @@ void InGameScene::Initialize()
 	LoadGround();
 	// ブロック生成
 	LoadBlock();
+
+	/*書き込んだところ*/
+	// マップデータ読み込み生成処理
+	LoadStageCSV();
+	/*ここまで*/
+
 }
 
 eSceneType InGameScene::Update(const float& delta_seconds)
@@ -339,43 +352,45 @@ void InGameScene::LoadCastle(int x_start, int y_start, int x_last, int y_last)
 void InGameScene::LoadGround()
 {
 	//地面生成
-	LoadFloor(1, 14, 69, 15);
-	LoadFloor(72, 14, 86, 15);
-	LoadFloor(90, 14, 153, 15);
-	LoadFloor(156, 14, 213, 15);
+	// LoadFloor(1, 14, 69, 15);
+	// LoadFloor(72, 14, 86, 15);
+	// LoadFloor(90, 14, 153, 15);
+	// LoadFloor(156, 14, 213, 15);
+
 	//階段生成
-	LoadStairs(135, 13, 138, 13);
-	LoadStairs(136, 12, 138, 12);
-	LoadStairs(137, 11, 138, 11);
-	LoadStairs(138, 10, 138, 10);
-	LoadStairs(141, 10, 141, 10);
-	LoadStairs(141, 11, 142, 11);
-	LoadStairs(141, 12, 143, 12);
-	LoadStairs(141, 13, 144, 13);
-	LoadStairs(149, 13, 153, 13);
-	LoadStairs(150, 12, 153, 12);
-	LoadStairs(151, 11, 153, 11);
-	LoadStairs(152, 10, 153, 10);
-	LoadStairs(156, 10, 156, 10);
-	LoadStairs(156, 11, 157, 11);
-	LoadStairs(156, 12, 158, 12);
-	LoadStairs(156, 13, 159, 13);
-	LoadStairs(182, 13, 190, 13);
-	LoadStairs(183, 12, 190, 12);
-	LoadStairs(184, 11, 190, 11);
-	LoadStairs(185, 10, 190, 10);
-	LoadStairs(186, 9, 190, 9);
-	LoadStairs(187, 8, 190, 8);
-	LoadStairs(188, 7, 190, 7);
-	LoadStairs(189, 6, 190, 6);
-	LoadStairs(199, 13, 199, 13);
+	// LoadStairs(135, 13, 138, 13);
+	// LoadStairs(136, 12, 138, 12);
+	// LoadStairs(137, 11, 138, 11);
+	// LoadStairs(138, 10, 138, 10);
+	// LoadStairs(141, 10, 141, 10);
+	// LoadStairs(141, 11, 142, 11);
+	// LoadStairs(141, 12, 143, 12);
+	// LoadStairs(141, 13, 144, 13);
+	// LoadStairs(149, 13, 153, 13);
+	// LoadStairs(150, 12, 153, 12);
+	// LoadStairs(151, 11, 153, 11);
+	// LoadStairs(152, 10, 153, 10);
+	// LoadStairs(156, 10, 156, 10);
+	// LoadStairs(156, 11, 157, 11);
+	// LoadStairs(156, 12, 158, 12);
+	// LoadStairs(156, 13, 159, 13);
+	// LoadStairs(182, 13, 190, 13);
+	// LoadStairs(183, 12, 190, 12);
+	// LoadStairs(184, 11, 190, 11);
+	// LoadStairs(185, 10, 190, 10);
+	// LoadStairs(186, 9, 190, 9);
+	// LoadStairs(187, 8, 190, 8);
+	// LoadStairs(188, 7, 190, 7);
+	// LoadStairs(189, 6, 190, 6);
+	// LoadStairs(199, 13, 199, 13);
+
 	//土管生成
-	LoadPipe(29, 12, 30, 13);
-	LoadPipe(39, 11, 40, 13);
-	LoadPipe(47, 10, 48, 13);
-	LoadPipe(58, 10, 59, 13);
-	LoadPipe(164, 12, 165, 13);
-	LoadPipe(180, 12, 181, 13);
+	// LoadPipe(29, 12, 30, 13);
+	// LoadPipe(39, 11, 40, 13);
+	// LoadPipe(47, 10, 48, 13);
+	// LoadPipe(58, 10, 59, 13);
+	// LoadPipe(164, 12, 165, 13);
+	// LoadPipe(180, 12, 181, 13);
 }
 // 地面生成
 void InGameScene::LoadFloor(int x_start, int y_start, int x_last, int y_last)
@@ -456,39 +471,41 @@ void InGameScene::LoadPipe(int x_start, int y_start, int x_last, int y_last)
 void InGameScene::LoadBlock()
 {
 	//ハテナブロック生成
-	LoadQuestion(17, 10, 17, 10, COIN);
-	LoadQuestion(22, 10, 22, 10, RED);
-	LoadQuestion(23, 6, 23, 6, COIN);
-	LoadQuestion(24, 10, 24, 10, COIN);
-	LoadQuestion(79, 10, 79, 10, RED);
-	LoadQuestion(95, 6, 95, 6, COIN);
-	LoadQuestion(107, 10, 107, 10, COIN);
-	LoadQuestion(110, 6, 110, 6, RED);
-	LoadQuestion(110, 10, 110, 10, COIN);
-	LoadQuestion(113, 10, 113, 10, COIN);
-	LoadQuestion(130, 6, 130, 6, COIN);
-	LoadQuestion(131, 6, 131, 6, COIN);
-	LoadQuestion(171, 10, 171, 10, COIN);
+	// LoadQuestion(17, 10, 17, 10, COIN);
+	// LoadQuestion(22, 10, 22, 10, RED);
+	// LoadQuestion(23, 6, 23, 6, COIN);
+	// LoadQuestion(24, 10, 24, 10, COIN);
+	// LoadQuestion(79, 10, 79, 10, RED);
+	// LoadQuestion(95, 6, 95, 6, COIN);
+	// LoadQuestion(107, 10, 107, 10, COIN);
+	// LoadQuestion(110, 6, 110, 6, RED);
+	// LoadQuestion(110, 10, 110, 10, COIN);
+	// LoadQuestion(113, 10, 113, 10, COIN);
+	// LoadQuestion(130, 6, 130, 6, COIN);
+	// LoadQuestion(131, 6, 131, 6, COIN);
+	// LoadQuestion(171, 10, 171, 10, COIN);
+
 	//レンガブロック生成
-	LoadBrick(21, 10, 21, 10, DEFAULT);
-	LoadBrick(23, 10, 23, 10, DEFAULT);
-	LoadBrick(25, 10, 25, 10, DEFAULT);
-	LoadBrick(78, 10, 78, 10, DEFAULT);
-	LoadBrick(80, 10, 80, 10, DEFAULT);
-	LoadBrick(81, 6, 88, 6, DEFAULT);
-	LoadBrick(92, 6, 94, 6, DEFAULT);
-	LoadBrick(95, 10, 95, 10, COIN_10);
-	LoadBrick(101, 10, 101, 10, DEFAULT);
-	LoadBrick(102, 10, 102, 10, STAR);
-	LoadBrick(119, 10, 119, 10, DEFAULT);
-	LoadBrick(122, 6, 124, 6, DEFAULT);
-	LoadBrick(129, 6, 129, 6, DEFAULT);
-	LoadBrick(130, 10, 131, 10, DEFAULT);
-	LoadBrick(132, 6, 132, 6, DEFAULT);
-	LoadBrick(169, 10, 170, 10, DEFAULT);
-	LoadBrick(172, 10, 172, 10, DEFAULT);
+	// LoadBrick(21, 10, 21, 10, DEFAULT);
+	// LoadBrick(23, 10, 23, 10, DEFAULT);
+	// LoadBrick(25, 10, 25, 10, DEFAULT);
+	// LoadBrick(78, 10, 78, 10, DEFAULT);
+	// LoadBrick(80, 10, 80, 10, DEFAULT);
+	// LoadBrick(81, 6, 88, 6, DEFAULT);
+	// LoadBrick(92, 6, 94, 6, DEFAULT);
+	// LoadBrick(95, 10, 95, 10, COIN_10);
+	// LoadBrick(101, 10, 101, 10, DEFAULT);
+	// LoadBrick(102, 10, 102, 10, STAR);
+	// LoadBrick(119, 10, 119, 10, DEFAULT);
+	// LoadBrick(122, 6, 124, 6, DEFAULT);
+	// LoadBrick(129, 6, 129, 6, DEFAULT);
+	// LoadBrick(130, 10, 131, 10, DEFAULT);
+	// LoadBrick(132, 6, 132, 6, DEFAULT);
+	// LoadBrick(169, 10, 170, 10, DEFAULT);
+	// LoadBrick(172, 10, 172, 10, DEFAULT);
+
 	//透明ブロック生成
-	LoadHidden(65, 9, 65, 9, GREEN);
+	// LoadHidden(65, 9, 65, 9, GREEN);
 }
 // ハテナブロック生成
 void InGameScene::LoadQuestion(int x_start, int y_start, int x_last, int y_last, eContentsState state)
@@ -547,3 +564,131 @@ void InGameScene::LoadHidden(int x_start, int y_start, int x_last, int y_last, e
 		}
 	}
 }
+
+/*書き込んだ場所*/
+void InGameScene::LoadStageCSV()
+{
+	// 読み込むファイル名
+	std::string file_name = "Resource/Map/LoadFloor.csv";
+	// 指定ファイルを読み込む
+	std::ifstream ifs(file_name);
+
+	int n;		// 画像引数
+	int height;		// 土管の高さ
+
+	// デバッグ
+	/****************************/
+	// int a;
+	// a = 0;
+	/****************************/
+	// エラーチェック
+	if (ifs.fail())
+	{
+		throw( file_name + "が開けません");
+	}
+	// ファイルから1行ずつ読み込む
+	std::string line;
+	while (std::getline(ifs, line))
+	{
+		// 文字列を書式指定で分解して値を各変数に格納する
+		char mode = NULL;			// 生成するオブジェクトモード
+		int x_start = NULL;			// 生成するものの左上のx座標
+		int y_start = NULL;			// 生成するものの左上のy座標
+		int x_last = 0;				// 生成するものの右下のx座標
+		int y_last = 0;				// 生成するものの右下のy座標
+		char state = NULL;
+		sscanf_s(
+			line.c_str(),
+			"%c, %d, %d, %d, %d, %c",
+			&mode, (unsigned int)sizeof(mode),
+			&x_start, &y_start,
+			&x_last, &y_last,
+			&state, (unsigned int)sizeof(state)
+		);
+
+		// 生成位置の情報
+		/***テスト***/
+		// Vector2D floor_up;
+		// Vector2D floor_dwon;
+		Vector2D generate_location;
+		switch (mode)
+		{
+			// 地面
+			case 'F':
+				generate_location.x = D_MONO * x_start - D_HARF;
+				generate_location.y = D_MONO * y_start - D_HARF;
+				g = object_manager->CreateGameObject<Ground>(generate_location);
+				generate_location.x = D_MONO * x_last - D_HARF;
+				generate_location.y = D_MONO * y_last - D_HARF;
+				g = object_manager->CreateGameObject<Ground>(generate_location);
+				g->SetGroundState(eGroundState::FLOOR);
+				break;
+			case 'S':
+				generate_location.x = D_MONO * x_start - D_HARF;
+				generate_location.y = D_MONO * y_start - D_HARF;
+				g = object_manager->CreateGameObject<Ground>(generate_location);
+				g->SetGroundState(eGroundState::STAIRS);
+				generate_location.x = D_MONO * x_last - D_HARF;
+				generate_location.y = D_MONO * y_last - D_HARF;
+				g = object_manager->CreateGameObject<Ground>(generate_location);
+				g->SetGroundState(eGroundState::STAIRS);
+				break;
+			case 'P':
+				//左上
+				height = (y_last - y_start);	// 高さ
+				n = 0;							// 画像引数
+				generate_location.x = D_MONO * (x_start++) - D_HARF;
+				generate_location.y = D_MONO * (y_start) - D_HARF;
+				g = object_manager->CreateGameObject<Ground>(generate_location);
+				g->SetGroundState(eGroundState::PIPE);
+				g->SetPipeNum(n++);
+
+				//右上
+				generate_location.x = D_MONO * (x_start--) - D_HARF;
+				generate_location.y = D_MONO * (y_start++) - D_HARF;
+				g = object_manager->CreateGameObject<Ground>(generate_location);
+				g->SetGroundState(eGroundState::PIPE);
+				g->SetPipeNum(n++);
+				//下
+				for (int j = 0; j < height; j++)
+				{
+					//左
+					generate_location.x = D_MONO * (x_start++) - D_HARF;
+					generate_location.y = D_MONO * (y_start)-D_HARF;
+					g = object_manager->CreateGameObject<Ground>(generate_location);
+					g->SetGroundState(eGroundState::PIPE);
+					g->SetPipeNum(n++);
+					//右
+					generate_location.x = D_MONO * (x_start--) - D_HARF;
+					generate_location.y = D_MONO * (y_start++) - D_HARF;
+					g = object_manager->CreateGameObject<Ground>(generate_location);
+					g->SetGroundState(eGroundState::PIPE);
+					g->SetPipeNum(n--);
+				}
+				break;
+			case 'Q':
+				generate_location.x = D_MONO * x_start - D_HARF;
+				generate_location.y = D_MONO * y_start - D_HARF;
+				b = object_manager->CreateGameObject<Block>(Vector2D(generate_location));
+				b->SetBlockState(eBlockState::QUESTION);
+				break;
+			case 'B':
+				generate_location.x = D_MONO * x_start - D_HARF;
+				generate_location.y = D_MONO * y_start - D_HARF;
+				b = object_manager->CreateGameObject<Block>(Vector2D(generate_location));
+				b->SetBlockState(eBlockState::BRICK);
+
+				break;
+			case 'H':
+				generate_location.x = D_MONO * x_start - D_HARF;
+				generate_location.y = D_MONO * y_start - D_HARF;
+				b = object_manager->CreateGameObject<Block>(Vector2D(generate_location));
+				b->SetBlockState(eBlockState::HIDDEN);
+
+			default:
+				break;
+		}
+	}
+	
+}
+/*ここまで*/

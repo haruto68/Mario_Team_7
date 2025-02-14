@@ -13,6 +13,8 @@ class InGameScene : public SceneBase
 public:
 	class GameObjectManager* object_manager;
 	class Player* player;
+	class Ground* g;
+	class Block* b;
 
 	std::vector<GameObject*> scene_objects_list;
 
@@ -47,4 +49,10 @@ public:
 	void LoadQuestion(int, int, int, int, eContentsState);
 	void LoadBrick(int, int, int, int, eContentsState);
 	void LoadHidden(int, int, int, int, eContentsState);
+
+private:
+	/// <summary>
+	/// ステージマップ（壁）読込み処理
+	/// </summary>
+	void LoadStageCSV();
 };
