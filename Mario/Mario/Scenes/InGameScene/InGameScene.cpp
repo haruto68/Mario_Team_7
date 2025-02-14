@@ -97,8 +97,17 @@ eSceneType InGameScene::Update(const float& delta_seconds)
 	//当たり判定チェック
 	for (int a = 0; a < scene_objects_list.size(); a++)
 	{
+		if (scene_objects_list[a]->GetMobility() != true)
+		{
+			break;
+		}
+
 		for (int b = 0; b < scene_objects_list.size(); b++)
 		{
+			if (scene_objects_list[b]->GetMobility() != true)
+			{
+				break;
+			}
 			// なぜかフリーズするので封印（無限ループではない？）
 			/*object_manager->HitCheck(scene_objects_list[a], scene_objects_list[b]);
 			object_manager->HitCheck(scene_objects_list[b], scene_objects_list[a]);*/

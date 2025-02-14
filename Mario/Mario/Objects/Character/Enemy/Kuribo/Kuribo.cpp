@@ -52,6 +52,11 @@ void Kuribo::Finalize()
 
 }
 
+void Kuribo::OnHitCollision(GameObject* hit_object)
+{
+	if(hit_object->collision.)
+}
+
 void Kuribo::Movement(float delta_seconds)
 {
 	float speed = 100.0f;

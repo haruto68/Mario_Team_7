@@ -17,9 +17,4 @@ protected:
 public:
 	bool flip_flag = false;
 
-public:
-	virtual void OnHitCollision(GameObject*) override
-	{
-
-	}
 };

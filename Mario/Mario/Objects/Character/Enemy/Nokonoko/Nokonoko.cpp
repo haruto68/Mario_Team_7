@@ -65,6 +65,11 @@ void Nokonoko::Finalize()
 
 }
 
+void Nokonoko::OnHitCollision(GameObject* hit_object)
+{
+
+}
+
 void Nokonoko::Movement(float delta_seconds)
 {
 	float speed = 100.0f;

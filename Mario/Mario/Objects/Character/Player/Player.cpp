@@ -81,6 +81,11 @@ void Player::Finalize()
 	mario_images.clear();
 }
 
+void Player::OnHitCollision(GameObject* hit_object)
+{
+
+}
+
 Vector2D Player::GetScreenVelocity()
 {
 	Vector2D value = 0.0f;

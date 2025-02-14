@@ -71,6 +71,12 @@ void Ground::Finalize()
 
 }
 
+void Ground::OnHitCollision(GameObject* hit_object)
+{
+
+}
+
+
 void Ground::SetGroundState(eGroundState state)
 {
 	ground_state = state;

@@ -98,6 +98,12 @@ void Block::Finalize()
 
 }
 
+void Block::OnHitCollision(GameObject* hit_object)
+{
+
+}
+
+
 void Block::SetBlockState(eBlockState state)
 {
 	block_state = state;
